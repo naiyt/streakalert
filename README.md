@@ -6,8 +6,8 @@ Pointless script that will remind you to commit something to GitHub to keep your
 How
 ---
 
-* Define your `from_email` and `to_email` addresses in config.py
-* Define the minimum current streak you must have before you are notified
+* Define your `from_email` and `to_email` addresses in `config.py`
+* Define the minimum current streak you must have before you are notified as `min_streak_alerts` in `config.py`
 * Setup a cron job to run this once a day or something (at a time where you might forget you need to commit something, but still have time to do so).
 
 Requires
