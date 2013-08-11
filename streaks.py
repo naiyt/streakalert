@@ -31,7 +31,7 @@ def determine_streak(username):
 
 
 def alert(streak):
-    '''Sends you the email, ikf you're above the threshold'''
+    '''Sends you the email, if you're above the threshold and haven't committed today'''
     if config.min_streak_alerts <= streak:
         body = """
         Just a friendly reminder to commit something, so you don't lose your {} streak on Github.
@@ -45,10 +45,23 @@ def alert(streak):
         s.sendmail(config.from_email, [config.to_email], msg.as_string())
         s.quit()
 
+def contributed_today(user):
+    '''Determines if you've already contributed something today'''
+    url = "https://github.com/users/{}/contributions_calendar_data".format(user)
+    contributions = urllib2.urlopen(url).read()
+    contributions = contributions[1:-2]
+    todays_contributions = int(contributions.split(',')[-1])
+    if todays_contributions > 0:
+       return True
+    else:
+       return False
+
 
 if __name__ == '__main__':
     if len(argv) < 2:
         print "Usage: streaks.py <github username>"
         exit()
-    curr_streak = determine_streak(argv[1])
-    alert(curr_streak)
+    user = argv[1]
+    if contributed_today(user) is False:
+        curr_streak = determine_streak(user)
+        alert(curr_streak)
