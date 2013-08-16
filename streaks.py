@@ -34,7 +34,7 @@ def alert(streak):
     '''Sends you the email, if you're above the threshold and haven't committed today'''
     if config.min_streak_alerts <= streak:
         body = """
-        Just a friendly reminder to commit something, so you don't lose your {} streak on Github.
+        Just a friendly reminder to commit something, so you don't lose your {} day streak on Github.
         """.format(streak)
         msg = MIMEText(body)
         msg['From'] = config.from_email
